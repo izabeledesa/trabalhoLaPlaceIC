@@ -75,38 +75,40 @@ func verificaQuadradaOrdem(mat [][]int) (bool, int) {
 // Verifica qual é a linha com mais 0's e quantos 0 ela tem
 func melhorLinha(mat [][]int) (int, int) {
     var numI, numJ, contI, contJ int
-	var acum, aux, temp int
-	var qtds0, melhorL int
+	var acum, aux int
+	var qtds0, melhorI int
 
 	numI = len(mat)
 	numJ = len(mat[0])
 
-    melhorL = 0
+    melhorI = 0
     qtds0 = 0
 	acum = 0
     aux = 0
 	for contI = 0; contI < numI; contI++ {
 		
 		for contJ = 0; contJ < numJ; contJ++ {
-			temp = mat[contI][contJ]
-			if temp == 0 {
+			if mat[contI][contJ] == 0 {
 				acum += 1
 			}
 		}
 		if acum > aux {
-            melhorL = contI
+            melhorI = contI
             qtds0 = acum
 		}
         aux = qtds0
         acum = 0
 	}
 
-	return melhorL, qtds0
+	fmt.Println("Melhor linha: ", melhorI)
+    fmt.Println("Qtd 0 da melhor linha: ", qtds0)
+
+	return melhorI, qtds0
 }
 
 func melhorColuna(mat [][]int) (int, int) {
     var numI, numJ, contI, contJ int
-	var acum, aux, temp int
+	var acum, aux int
 	var qtds0, melhorJ int
 
 	numI = len(mat)
@@ -119,8 +121,7 @@ func melhorColuna(mat [][]int) (int, int) {
 	for contJ = 0; contJ < numJ; contJ++ {
 		
 		for contI = 0; contI < numI; contI++ {
-			temp = mat[contI][contJ]
-			if temp == 0 {
+			if mat[contI][contJ] == 0 {
 				acum += 1
 			}
 		}
@@ -133,6 +134,23 @@ func melhorColuna(mat [][]int) (int, int) {
 	}
 
 	return melhorJ, qtds0
+}
+
+func linhaOuColuna(mat [][]int) int {
+    var melhorI, qtd0I int
+    var melhorJ, qtd0J int
+    var melhorIouJ int
+
+    melhorI, qtd0I = melhorLinha(mat)
+    melhorJ, qtd0J = melhorColuna(mat)
+
+    if(qtd0I >= qtd0J){
+        melhorIouJ = melhorI
+    } else {
+        melhorIouJ = melhorJ
+    }
+
+    return melhorIouJ
 }
 
 func copiaMatrizMaiorParaMenor(maior [][]int, menor [][]int, isqn int, jsqn int) {
@@ -259,16 +277,12 @@ func main() {
 	matrixA = criaMatriz(numLinhas, numColunas)
 	iniciaMatrizRandomica(matrixA)
 
-    // Apagar dps ----------------------------
-    var melhorI, qtd0L int
-    melhorI, qtd0L = melhorLinha(matrixA)
-	fmt.Println("Melhor linha: ", melhorI)
-    fmt.Println("Qtd 0 da melhor linha: ", qtd0L)
+
+    
     var melhorJ, qtd0J int
     melhorJ, qtd0J = melhorColuna(matrixA)
 	fmt.Println("Melhor Coluna: ", melhorJ)
     fmt.Println("Qtd 0 da melhor Coluna: ", qtd0J)
-    //-----------------------------------------------
 
 	fmt.Println()
 	imprimeMatriz(matrixA)
