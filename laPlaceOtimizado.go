@@ -72,36 +72,6 @@ func verificaQuadradaOrdem(mat [][]int) (bool, int) {
 	return ehQuadrada, numLinhas
 }
 
-func copiaMatrizMaiorParaMenor(maior [][]int, menor [][]int, isqn int, jsqn int) {
-	var contAi, contAj, contBi, contBj, temp, numL, numC int
-	numL = len(menor)
-	numC = len(menor[0])
-
-	contAi = 0
-	for contBi = 0; contBi < numL; contBi++ {
-		if contAi == isqn {
-			contAi++
-		}
-		contAj = 0
-		for contBj = 0; contBj < numC; contBj++ {
-			if contAj == jsqn {
-				contAj++
-			}
-			temp = maior[contAi][contAj]
-			menor[contBi][contBj] = temp
-			contAj++
-		}
-		contAi++
-	}
-	/*
-	   fmt.Println("Matriz maior")
-	   imprimeMatriz(maior)
-	   fmt.Println("Matriz menor")
-	   imprimeMatriz(menor)
-	   fmt.Println( )
-	*/
-}
-
 // Verifica qual é a linha com mais 0's e quantos 0 ela tem
 func melhorLinha(mat [][]int) (int, int) {
     var numI, numJ, contI, contJ int
@@ -163,6 +133,36 @@ func melhorColuna(mat [][]int) (int, int) {
 	}
 
 	return melhorJ, qtds0
+}
+
+func copiaMatrizMaiorParaMenor(maior [][]int, menor [][]int, isqn int, jsqn int) {
+	var contAi, contAj, contBi, contBj, temp, numL, numC int
+	numL = len(menor)
+	numC = len(menor[0])
+
+	contAi = 0
+	for contBi = 0; contBi < numL; contBi++ {
+		if contAi == isqn {
+			contAi++
+		}
+		contAj = 0
+		for contBj = 0; contBj < numC; contBj++ {
+			if contAj == jsqn {
+				contAj++
+			}
+			temp = maior[contAi][contAj]
+			menor[contBi][contBj] = temp
+			contAj++
+		}
+		contAi++
+	}
+	/*
+	   fmt.Println("Matriz maior")
+	   imprimeMatriz(maior)
+	   fmt.Println("Matriz menor")
+	   imprimeMatriz(menor)
+	   fmt.Println( )
+	*/
 }
 
 func detOrdem1(mat [][]int) int {
