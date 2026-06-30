@@ -100,8 +100,8 @@ func melhorLinha(mat [][]int) (int, int) {
         acum = 0
 	}
 
-	fmt.Println("Melhor linha: ", melhorI)
-    fmt.Println("Qtd 0 da melhor linha: ", qtds0)
+	//fmt.Println("Melhor linha: ", melhorI)
+    //fmt.Println("Qtd 0 da melhor linha: ", qtds0)
 
 	return melhorI, qtds0
 }
@@ -132,6 +132,9 @@ func melhorColuna(mat [][]int) (int, int) {
         aux = qtds0
         acum = 0
 	}
+
+    //fmt.Println("Melhor linha: ", melhorJ)
+    //fmt.Println("Qtd 0 da melhor linha: ", qtds0)
 
 	return melhorJ, qtds0
 }
@@ -276,13 +279,6 @@ func main() {
 
 	matrixA = criaMatriz(numLinhas, numColunas)
 	iniciaMatrizRandomica(matrixA)
-
-
-    
-    var melhorJ, qtd0J int
-    melhorJ, qtd0J = melhorColuna(matrixA)
-	fmt.Println("Melhor Coluna: ", melhorJ)
-    fmt.Println("Qtd 0 da melhor Coluna: ", qtd0J)
 
 	fmt.Println()
 	imprimeMatriz(matrixA)
