@@ -134,6 +134,37 @@ func melhorLinha(mat [][]int) (int, int) {
 	return melhorL, qtds0
 }
 
+func melhorColuna(mat [][]int) (int, int) {
+    var numI, numJ, contI, contJ int
+	var acum, aux, temp int
+	var qtds0, melhorJ int
+
+	numI = len(mat)
+	numJ = len(mat[0])
+
+    melhorJ = 0
+    qtds0 = 0
+	acum = 0
+    aux = 0
+	for contJ = 0; contJ < numJ; contJ++ {
+		
+		for contI = 0; contI < numI; contI++ {
+			temp = mat[contI][contJ]
+			if temp == 0 {
+				acum += 1
+			}
+		}
+		if acum > aux {
+            melhorJ = contJ
+            qtds0 = acum
+		}
+        aux = qtds0
+        acum = 0
+	}
+
+	return melhorJ, qtds0
+}
+
 func detOrdem1(mat [][]int) int {
 	return mat[0][0]
 }
@@ -228,11 +259,16 @@ func main() {
 	matrixA = criaMatriz(numLinhas, numColunas)
 	iniciaMatrizRandomica(matrixA)
 
-
-    var melhorL, qtd0L int
-    melhorL, qtd0L = melhorLinha(matrixA)
-	fmt.Println("Melhor linha: ", melhorL+1)
+    // Apagar dps ----------------------------
+    var melhorI, qtd0L int
+    melhorI, qtd0L = melhorLinha(matrixA)
+	fmt.Println("Melhor linha: ", melhorI)
     fmt.Println("Qtd 0 da melhor linha: ", qtd0L)
+    var melhorJ, qtd0J int
+    melhorJ, qtd0J = melhorColuna(matrixA)
+	fmt.Println("Melhor Coluna: ", melhorJ)
+    fmt.Println("Qtd 0 da melhor Coluna: ", qtd0J)
+    //-----------------------------------------------
 
 	fmt.Println()
 	imprimeMatriz(matrixA)
