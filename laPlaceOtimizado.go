@@ -246,7 +246,7 @@ func linhaOuColuna(mat [][]int) (int, bool) {
 func detOrdemNOtimizado(mat [][]int) int {
 	var sinal, cofator, detTemp, resposta int
     var contL, contC, numL, numC, contK, numK int
-
+    var auxLinha, auxColuna int
 	var matMenor [][]int
 
     var melhorFila int
@@ -271,11 +271,14 @@ func detOrdemNOtimizado(mat [][]int) int {
 	//contL = 0
 
 	for contK = 0; contK < numK; contK++ {
-        if IouJ == true {
-            cofator = mat[contL][contK]
+        if IouJ == true {    
+            auxLinha = contL
+            auxColuna = contK
         } else {
-            cofator = mat[contK][contC]
+            auxLinha = contK
+            auxColuna = contC
         }
+        cofator = mat[auxLinha][auxColuna]
         if cofator == 0 {
             fmt.Println()
             fmt.Println("resposta ",resposta)
@@ -283,10 +286,10 @@ func detOrdemNOtimizado(mat [][]int) int {
             resposta += 0
             fmt.Println("resposta dps",resposta)
         } else {
-            sinal = calculaSinal(contL, contC)
+            sinal = calculaSinal(auxLinha, auxColuna)
 		    //criando a matriz menor
 		    matMenor = criaMatriz(numL-1, numC-1)
-		    copiaMatrizMaiorParaMenor(mat, matMenor, contL, contC)
+		    copiaMatrizMaiorParaMenor(mat, matMenor, auxLinha, auxColuna)
 		    detTemp = determinante(matMenor)
 		    fmt.Println("DetTemp ",detTemp)
 		    fmt.Println("resposta ",resposta)
