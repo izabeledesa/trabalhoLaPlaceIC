@@ -93,76 +93,14 @@ func copiaMatrizMaiorParaMenor(maior [][]int, menor [][]int, isqn int, jsqn int)
 		}
 		contAi++
 	}
-	/*
+
+	   fmt.Println( )	
 	   fmt.Println("Matriz maior")
 	   imprimeMatriz(maior)
 	   fmt.Println("Matriz menor")
 	   imprimeMatriz(menor)
-	   fmt.Println( )
-	*/
-}
+	   //fmt.Println( )
 
-// Verifica qual é a linha com mais 0's e quantos 0 ela tem
-func melhorLinha(mat [][]int) (int, int) {
-    var numI, numJ, contI, contJ int
-	var acum, aux, temp int
-	var qtds0, melhorL int
-
-	numI = len(mat)
-	numJ = len(mat[0])
-
-    melhorL = 0
-    qtds0 = 0
-	acum = 0
-    aux = 0
-	for contI = 0; contI < numI; contI++ {
-		
-		for contJ = 0; contJ < numJ; contJ++ {
-			temp = mat[contI][contJ]
-			if temp == 0 {
-				acum += 1
-			}
-		}
-		if acum > aux {
-            melhorL = contI
-            qtds0 = acum
-		}
-        aux = qtds0
-        acum = 0
-	}
-
-	return melhorL, qtds0
-}
-
-func melhorColuna(mat [][]int) (int, int) {
-    var numI, numJ, contI, contJ int
-	var acum, aux, temp int
-	var qtds0, melhorJ int
-
-	numI = len(mat)
-	numJ = len(mat[0])
-
-    melhorJ = 0
-    qtds0 = 0
-	acum = 0
-    aux = 0
-	for contJ = 0; contJ < numJ; contJ++ {
-		
-		for contI = 0; contI < numI; contI++ {
-			temp = mat[contI][contJ]
-			if temp == 0 {
-				acum += 1
-			}
-		}
-		if acum > aux {
-            melhorJ = contJ
-            qtds0 = acum
-		}
-        aux = qtds0
-        acum = 0
-	}
-
-	return melhorJ, qtds0
 }
 
 func detOrdem1(mat [][]int) int {
@@ -216,6 +154,159 @@ func detOrdemN(mat [][]int) int {
 	return resposta
 }
 
+
+//----------------------------------------------------------------------
+
+// Verifica qual é a linha com mais 0's e quantos 0 ela tem
+func melhorLinha(mat [][]int) (int, int) {
+    var numI, numJ, contI, contJ int
+	var acum, aux int
+	var qtds0, melhorI int
+
+	numI = len(mat)
+	numJ = len(mat[0])
+
+    melhorI = 0
+    qtds0 = 0
+	acum = 0
+    aux = 0
+	for contI = 0; contI < numI; contI++ {
+		for contJ = 0; contJ < numJ; contJ++ {
+			if mat[contI][contJ] == 0 {
+				acum += 1
+			}
+		}
+		if acum > aux {
+            melhorI = contI
+            qtds0 = acum
+		}
+        aux = qtds0
+        acum = 0
+	}
+
+	//fmt.Println("Melhor linha: ", melhorI)
+    //fmt.Println("Qtd 0 da melhor linha: ", qtds0)
+
+	return melhorI, qtds0
+}
+
+func melhorColuna(mat [][]int) (int, int) {
+    var numI, numJ, contI, contJ int
+	var acum, aux int
+	var qtds0, melhorJ int
+
+	numI = len(mat)
+	numJ = len(mat[0])
+
+    melhorJ = 0
+    qtds0 = 0
+	acum = 0
+    aux = 0
+	for contJ = 0; contJ < numJ; contJ++ {
+		
+		for contI = 0; contI < numI; contI++ {
+			if mat[contI][contJ] == 0 {
+				acum += 1
+			}
+		}
+		if acum > aux {
+            melhorJ = contJ
+            qtds0 = acum
+		}
+        aux = qtds0
+        acum = 0
+	}
+
+    //fmt.Println("Melhor linha: ", melhorJ)
+    //fmt.Println("Qtd 0 da melhor linha: ", qtds0)
+
+	return melhorJ, qtds0
+}
+
+func linhaOuColuna(mat [][]int) (int, bool) {
+    var melhorI, qtd0I int
+    var melhorJ, qtd0J int
+    var melhorFila int
+    var IouJ bool
+
+    melhorI, qtd0I = melhorLinha(mat)
+    melhorJ, qtd0J = melhorColuna(mat)
+
+    if(qtd0I >= qtd0J){
+        melhorFila = melhorI
+        IouJ = true
+    } else {
+        melhorFila = melhorJ
+        IouJ = false
+    }
+
+    return melhorFila, IouJ
+}
+
+func detOrdemNOtimizado(mat [][]int) int {
+	var sinal, cofator, detTemp, resposta int
+    var contL, contC, numL, numC, contK, numK int
+    var auxLinha, auxColuna int
+	var matMenor [][]int
+
+    var melhorFila int
+    var IouJ bool
+    melhorFila, IouJ = linhaOuColuna(mat)
+
+	numL = len(mat)
+	numC = len(mat[0])
+
+    if IouJ == true {
+        contL = melhorFila
+        contK = contC
+        numK = numC
+        fmt.Println("Melhor fila: Linha ", melhorFila)
+    } else {
+        contC = melhorFila
+        contK = contL
+        numK = numL
+        fmt.Println("Melhor fila: Coluna ", melhorFila)
+    }
+	resposta = 0
+	//contL = 0
+
+	for contK = 0; contK < numK; contK++ {
+        if IouJ == true {    
+            auxLinha = contL
+            auxColuna = contK
+        } else {
+            auxLinha = contK
+            auxColuna = contC
+        }
+        cofator = mat[auxLinha][auxColuna]
+        if cofator == 0 {
+            fmt.Println()
+            fmt.Println("resposta ",resposta)
+            fmt.Println("cofator ",cofator)
+            resposta += 0
+            fmt.Println("resposta dps",resposta)
+        } else {
+            sinal = calculaSinal(auxLinha, auxColuna)
+		    //criando a matriz menor
+		    matMenor = criaMatriz(numL-1, numC-1)
+		    copiaMatrizMaiorParaMenor(mat, matMenor, auxLinha, auxColuna)
+		    detTemp = determinante(matMenor)
+		    fmt.Println("DetTemp ",detTemp)
+		    fmt.Println("resposta ",resposta)
+		    fmt.Println("cofator ",cofator)
+		    fmt.Println("sinal ",sinal)
+		    resposta = resposta + (cofator * sinal * detTemp)
+		    fmt.Println("resposta dps",resposta)
+        }
+		
+	}
+
+	return resposta
+}
+
+//----------------------------------------------------------------------
+
+
 func determinante(mat [][]int) int {
 	var ordem int
 	var ehQuadrada bool
@@ -234,7 +325,8 @@ func determinante(mat [][]int) int {
 			det = detOrdem2(mat)
 		default:
 			//fmt.Println("Ordem ", ordem)
-			det = detOrdemN(mat)
+			//det = detOrdemN(mat)
+            det = detOrdemNOtimizado(mat)
 
 		}
 		//imprimeMatriz(mat)
@@ -258,17 +350,6 @@ func main() {
 
 	matrixA = criaMatriz(numLinhas, numColunas)
 	iniciaMatrizRandomica(matrixA)
-
-    // Apagar dps ----------------------------
-    var melhorI, qtd0L int
-    melhorI, qtd0L = melhorLinha(matrixA)
-	fmt.Println("Melhor linha: ", melhorI)
-    fmt.Println("Qtd 0 da melhor linha: ", qtd0L)
-    var melhorJ, qtd0J int
-    melhorJ, qtd0J = melhorColuna(matrixA)
-	fmt.Println("Melhor Coluna: ", melhorJ)
-    fmt.Println("Qtd 0 da melhor Coluna: ", qtd0J)
-    //-----------------------------------------------
 
 	fmt.Println()
 	imprimeMatriz(matrixA)
