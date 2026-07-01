@@ -93,13 +93,14 @@ func copiaMatrizMaiorParaMenor(maior [][]int, menor [][]int, isqn int, jsqn int)
 		}
 		contAi++
 	}
-
+       /*
 	   fmt.Println( )	
 	   fmt.Println("Matriz maior")
 	   imprimeMatriz(maior)
 	   fmt.Println("Matriz menor")
 	   imprimeMatriz(menor)
-	   //fmt.Println( )
+	   fmt.Println( )
+       */
 
 }
 
@@ -125,6 +126,7 @@ func calculaSinal(indiceL int, indiceC int) int {
 	}
 	return sinal
 }
+
 
 func detOrdemN(mat [][]int) int {
 	var sinal, cofator, detTemp, resposta, contL, contC, numL, numC int
@@ -260,12 +262,12 @@ func detOrdemNOtimizado(mat [][]int) int {
         contL = melhorFila
         contK = contC
         numK = numC
-        fmt.Println("Melhor fila: Linha ", melhorFila)
+        //fmt.Println("Melhor fila: Linha ", melhorFila)
     } else {
         contC = melhorFila
         contK = contL
         numK = numL
-        fmt.Println("Melhor fila: Coluna ", melhorFila)
+        //fmt.Println("Melhor fila: Coluna ", melhorFila)
     }
 	resposta = 0
 	//contL = 0
@@ -280,23 +282,23 @@ func detOrdemNOtimizado(mat [][]int) int {
         }
         cofator = mat[auxLinha][auxColuna]
         if cofator == 0 {
-            fmt.Println()
-            fmt.Println("resposta ",resposta)
-            fmt.Println("cofator ",cofator)
+            //fmt.Println()
+            //fmt.Println("resposta ",resposta)
+            //fmt.Println("cofator ",cofator)
             resposta += 0
-            fmt.Println("resposta dps",resposta)
+            //fmt.Println("resposta dps",resposta)
         } else {
             sinal = calculaSinal(auxLinha, auxColuna)
 		    //criando a matriz menor
 		    matMenor = criaMatriz(numL-1, numC-1)
 		    copiaMatrizMaiorParaMenor(mat, matMenor, auxLinha, auxColuna)
 		    detTemp = determinante(matMenor)
-		    fmt.Println("DetTemp ",detTemp)
-		    fmt.Println("resposta ",resposta)
-		    fmt.Println("cofator ",cofator)
-		    fmt.Println("sinal ",sinal)
+		    //fmt.Println("DetTemp ",detTemp)
+		    //fmt.Println("resposta ",resposta)
+		    //fmt.Println("cofator ",cofator)
+		    //fmt.Println("sinal ",sinal)
 		    resposta = resposta + (cofator * sinal * detTemp)
-		    fmt.Println("resposta dps",resposta)
+		    //fmt.Println("resposta dps",resposta)
         }
 		
 	}
@@ -307,7 +309,7 @@ func detOrdemNOtimizado(mat [][]int) int {
 //----------------------------------------------------------------------
 
 
-func determinante(mat [][]int) int {
+func determinanteOtimizado(mat [][]int) int {
 	var ordem int
 	var ehQuadrada bool
 	var det int
@@ -338,10 +340,41 @@ func determinante(mat [][]int) int {
 	return det
 }
 
+func determinante(mat [][]int) int{
+	var ordem int
+	var ehQuadrada bool
+	var det int
+
+	ehQuadrada, ordem = verificaQuadradaOrdem(mat)
+	det = 0
+	if(ehQuadrada){	
+	       // imprimeMatriz(mat)
+		switch (ordem) {
+		    case 1:
+		       // fmt.Println("Ordem 1")
+		    	det = detOrdem1(mat)
+		    case 2:
+		    	//fmt.Println("Ordem 2")
+		    	det = detOrdem2(mat)
+		    default: 
+		        //fmt.Println("Ordem ", ordem)
+		    	det = detOrdemN(mat)
+			
+		}
+		//imprimeMatriz(mat)
+		//fmt.Println("Det ", det)
+		
+	} else {
+		fmt.Println("Matriz nao eh quadrada!! retornando 0")
+	}
+	return det
+}
+
+/*
 func main() {
 	var numLinhas int
 	var numColunas int
-	var resposta int
+	var resposta1, resposta2 int
 
 	numLinhas = 3
 	numColunas = 3
@@ -354,7 +387,9 @@ func main() {
 	fmt.Println()
 	imprimeMatriz(matrixA)
 	fmt.Println()
-	resposta = determinante(matrixA)
+	resposta1 = determinante(matrixA)
+    resposta2 = determinanteOtimizado(matrixA)
 	fmt.Println()
 	fmt.Println(resposta)
 }
+*/

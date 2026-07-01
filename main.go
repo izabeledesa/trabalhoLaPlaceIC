@@ -5,29 +5,6 @@ import (
     "time"
 )
 
-func fatorialI(num int) int{
-	var cont int
-	var resposta int
-	resposta = 1
-	for cont= 2;cont<num; cont++{
-		resposta = resposta * cont
-	}
-	
-	return resposta
-}
-
-func fatorialR(num int) int{
-	var resposta int
-	
-        if num < 2 {
-        	resposta = 1	
-        } else {
-        	resposta = resposta * fatorialR(num-1)
-        }
-        
-	return resposta
-}
-
 func main(){
 
     var contOrdem int
@@ -38,8 +15,8 @@ func main(){
  	
         // parametros do experimento
 	var ordens []int
-	//ordens = []int{3, 5, 7, 9, 11}
-	ordens = []int{10, 100, 1000, 10000, 100000}
+	ordens = []int{3, 5, 7, 9, 11}
+	//ordens = []int{10, 100, 1000, 10000, 100000}
 	numRepeticoes = 3
 	//estruturas para processamento do tempo dos experimentos
 	var tempoBaseline []int64
@@ -49,18 +26,28 @@ func main(){
     var tempoExperimento int64
     
     // para o exemplo usando matriz
+
+    var numLinhas, numColunas int
+    var matrizBase [][]int
   
     //fim da inicalizacao da matriz
       
     for contOrdem = 0; contOrdem < len(ordens); contOrdem++ {
+        
+        numLinhas = ordens[contOrdem]
+        numColunas = ordens[contOrdem]
+
+        matrizBase = criaMatriz(numLinhas, numColunas)
        
         for contRepeticoes = 0; contRepeticoes < numRepeticoes; contRepeticoes++{		
 
             // para cada repeticao, iniciar uma matriz rand diferente!
+
+            iniciaMatrizRandomica(matrizBase)
 	       		
 	       	//medir o tempo do baseline com a matriz
 			inicio = time.Now()
-			fatorialR(ordens[contOrdem])
+            determinante(matrizBase)
 			fim = time.Now()
 			tempoExperimento = fim.UnixNano() - inicio.UnixNano()
 			//fmt.Println(tempoExperimento)
@@ -69,7 +56,7 @@ func main(){
 			
 			//medir o tempo da hacked com a mesma matriz anterior
 			inicio = time.Now()
-			fatorialI(ordens[contOrdem])
+            determinanteOtimizado(matrizBase)
 			fim = time.Now()
 			tempoExperimento = fim.UnixNano() - inicio.UnixNano()
 			//fmt.Println(tempoExperimento)
