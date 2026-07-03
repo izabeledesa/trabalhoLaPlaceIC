@@ -157,7 +157,7 @@ func detOrdemN(mat [][]int) int {
 }
 
 
-//----------------------------------------------------------------------
+//Funções de otimização ----------------------------------------------------------------------
 
 // Verifica qual é a linha com mais 0's e quantos 0 ela tem
 func melhorLinha(mat [][]int) (int, int) {
@@ -306,8 +306,6 @@ func detOrdemNOtimizado(mat [][]int) int {
 	return resposta
 }
 
-//----------------------------------------------------------------------
-
 
 func determinanteOtimizado(mat [][]int) int {
 	var ordem int
@@ -339,6 +337,8 @@ func determinanteOtimizado(mat [][]int) int {
 	}
 	return det
 }
+
+//----------------------------------------------------------------------
 
 func determinante(mat [][]int) int{
 	var ordem int
