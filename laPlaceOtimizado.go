@@ -292,7 +292,7 @@ func detOrdemNOtimizado(mat [][]int) int {
 		    //criando a matriz menor
 		    matMenor = criaMatriz(numL-1, numC-1)
 		    copiaMatrizMaiorParaMenor(mat, matMenor, auxLinha, auxColuna)
-		    detTemp = determinante(matMenor)
+		    detTemp = determinanteOtimizado(matMenor)
 		    //fmt.Println("DetTemp ",detTemp)
 		    //fmt.Println("resposta ",resposta)
 		    //fmt.Println("cofator ",cofator)
